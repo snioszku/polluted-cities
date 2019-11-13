@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "Roboto", sans-serif;
 }
 
 .App-logo {
@@ -19,4 +20,56 @@
 
 .App-link {
   color: #09d3ac;
+}
+.search {
+  width: 100%;
+}
+.cities {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+.city {
+  width: 25%;
+  padding: 10px;
+  box-shadow: 1px 1px 3px #444;
+  margin: 10px;
+  min-height: 30vh;
+}
+button {
+  text-transform: uppercase;
+  border: 2px solid #ff5177;
+  background-color: #ff5177;
+  color: #fff;
+  cursor: pointer;
+  clear: both;
+  display: block;
+  font-weight: 100;
+  margin: 20px auto;
+  padding: 10px;
+  text-transform: uppercase;
+  transition: all 0.7s;
+}
+button:hover {
+  background-color: white;
+  color: #ff5177;
+}
+form {
+  font-weight: 100;
+  margin-top: 20px;
+}
+form input {
+  border: 1px solid #ff5177;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: "Roboto";
+}
+form input:hover {
+  background-color: #282c3450;
+  color: white;
+}
+.city span {
+  color: brown;
+  font-weight: 400;
 }
