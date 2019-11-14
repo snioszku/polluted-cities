@@ -15,7 +15,7 @@ function City(props) {
               {unit}
             </span>
           </p>
-          <h5>More details</h5>
+          <h5>v</h5>
         </div>
       ))}
     </div>
