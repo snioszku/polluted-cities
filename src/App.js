@@ -1,13 +1,17 @@
-import React from "react";
-import Search from "./Search";
+import React from 'react';
+import Search from './Search';
 
-import "./App.css";
+import './App.css';
+import Header from './Header';
+import Footer from './Footer';
 
 function App() {
   return (
     <div className="App">
-      asdas
+      <Header />
+
       <Search />
+      <Footer />
     </div>
   );
 }

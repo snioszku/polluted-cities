@@ -1,21 +1,28 @@
 .App {
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-logo {
   height: 40vmin;
 }
 
-.App-header {
+.Header {
   background-color: #282c34;
-  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-top: 20px;
+  padding-bottom: 20px;
   color: white;
+}
+.Header h2 {
+  letter-spacing: 1px;
+}
+.Header h6 {
+  font-size: 0.7rem;
 }
 
 .App-link {
@@ -30,6 +37,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.accordion {
+  overflow-y: scroll;
+  max-height: 40vh;
+}
 .accordion > .card .card-header,
 .card-body {
   padding: 10px;
@@ -39,10 +51,13 @@
 
   background-color: #fff;
 }
+.card-body h5 {
+  font-size: 1rem;
+}
 button {
   text-transform: uppercase;
-  border: 2px solid #ff5177;
-  background-color: #ff5177;
+  border: 2px solid brown;
+  background-color: brown;
   color: #fff;
   cursor: pointer;
   clear: both;
@@ -55,17 +70,18 @@ button {
 }
 button:hover {
   background-color: white;
-  color: #ff5177;
+  color: brown;
 }
 form {
   font-weight: 100;
   margin-top: 20px;
 }
 form input {
-  border: 1px solid #ff5177;
+  border: 1px solid brown;
   padding: 10px;
   border-radius: 5px;
-  font-family: "Roboto";
+  font-family: 'Roboto';
+  margin: 5px;
 }
 form input:hover {
   background-color: #282c3450;
@@ -83,6 +99,30 @@ h6:hover {
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px;
 }
-/*  https://api.openaq.org/v1/measurements?country=${country}&parameter=${pollution}&order_by[]=value&sort=desc&limit=10`
-https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&titles=Albert%20Einstein*/
+form input label {
+  text-align: left;
+}
+form p {
+  font-style: 0.5rem;
+}
+option {
+  background-color: brown;
+}
+
+.footer {
+  bottom: 0px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: #282c34;
+  color: #fff;
+}
+.card-header h5 {
+  font-size: 0.8rem;
+}
+.card-header h5::hover {
+  color: brown;
+}

@@ -2,28 +2,17 @@ import React, { useState, useEffect } from 'react';
 
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
+import removeDuplicate from './removeDuplicates.js';
 
 const Search = () => {
   const [country, setCountry] = useState('');
   const [cities, setCites] = useState([]);
   const [pollutions, setPollutions] = useState([]);
   const [pollution, setPollution] = useState();
-  const [descriptions, setDescritpoins] = useState('');
+  const [descriptions, setDescriptions] = useState('');
 
   let countryISO = '';
-  const updatedData = [];
-  let updatedData10 = [];
-  const updatedDataPollutions = [];
-
-  useEffect(() => {
-    setPollutions([]);
-    fetch('https://api.openaq.org/v1/parameters ')
-      .then(response => response.json())
-      .then(data => {
-        setPollutions(data.results);
-      });
-  }, []);
-
+  const updatedDataPollutionsDescipt = [];
   const getISO = () => {
     if (country.toLowerCase() === 'poland') {
       countryISO = 'PL';
@@ -34,7 +23,22 @@ const Search = () => {
     } else if (country.toLowerCase() === 'france') {
       countryISO = 'FR';
     }
+    return countryISO;
   };
+
+  async function moreDetails(e) {
+    e.persist();
+    const cityName = e.target.id;
+
+    const response = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exsentences=10&explaintext&origin=*&titles=${cityName}`,
+    );
+    const myJson = await response.json();
+    let numkey = Object.keys(myJson.query.pages).join();
+
+    setDescriptions(myJson.query.pages[numkey].extract);
+    console.log(e.target.id);
+  }
 
   const take = async () => {
     const response = await fetch(
@@ -42,44 +46,20 @@ const Search = () => {
     );
     const myJson = await response.json();
 
-    for (let i = 0; i < myJson.results.length; i++) {
-      if (!updatedData.includes(myJson.results[i].city)) {
-        updatedData.push(myJson.results[i].city);
-      }
-    }
-    updatedData10 = updatedData.slice(0, 10);
-
-    for (let i = 0; i < updatedData10.length; i++) {
-      if (updatedData10[i].includes('CCAA')) {
-        updatedData10[i] = updatedData10.replace('CCAA ', '');
-      }
-
-      if (updatedData10[i].includes('Com.')) {
-        updatedData10[i] = updatedData10[i].replace('Com. ', '');
-      }
-    }
-
-    updatedData10.forEach(el =>
-      fetch(
-        `https://api.openaq.org/v1/latest?city=${el}&parameter=${pollution}&sort=desc&limit=1`,
-      )
-        .then(response => response.json())
-        .then(data => updatedDataPollutions.push(data)),
-    );
-    setCites(updatedDataPollutions);
-    console.log(updatedData10, updatedDataPollutions, cities);
+    const mostPolluted = removeDuplicate(myJson.results, element => {
+      return element.city;
+    }).slice(0, 10);
+    setCites(mostPolluted);
+    console.log('dziala', mostPolluted);
   };
 
   useEffect(() => {
-    fetch(
-      'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&explaintext&origin=*&titles=Przemyśl',
-    )
+    fetch('https://api.openaq.org/v1/parameters')
       .then(response => response.json())
       .then(data => {
-        let numkey = Object.keys(data.query.pages).join();
-        setDescritpoins(data.query.pages[numkey].extract);
+        setPollutions(data.results);
       });
-  }, []);
+  });
 
   return (
     <div>
@@ -100,9 +80,11 @@ const Search = () => {
               value={country}
               onChange={e => setCountry(e.target.value)}
               required
-            ></input>
+              pattern="^(Poland|Germany|France|Spain).*$"
+            ></input>{' '}
+            <br />
+            <p>Allowed countries names: Poland |Germany |France | Spain</p>
           </label>{' '}
-          <br />
           <br />
           <label htmlFor="location">
             <select
@@ -120,24 +102,29 @@ const Search = () => {
             </select>
           </label>
           <br />
-          <br />
           <button type="submit">Submit</button>
         </form>
       </div>
       <Accordion defaultActiveKey="0">
-        {cities.map(({ results }, i) => (
+        {cities.map(({ city, measurements }, i) => (
           <Card key={i}>
             <Accordion.Toggle as={Card.Header} eventKey={i}>
-              <h3>{results[0].city}</h3>
+              <h3>{city}</h3>
               <p>
-                Pollution level: <br />
-                <br />
+                Pollution level:
                 <span>
-                  {results[0].measurements[0].value}
-                  {results[0].measurements[0].unit}
+                  {measurements[0].value}
+                  {measurements[0].unit}
                 </span>
               </p>
-              <h5>More details</h5>
+              <h5
+                id={city}
+                onClick={e => {
+                  moreDetails(e);
+                }}
+              >
+                More details
+              </h5>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={i}>
               <Card.Body>{descriptions}</Card.Body>
