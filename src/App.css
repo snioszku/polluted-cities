@@ -1,6 +1,8 @@
 .App {
   text-align: center;
   font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .App-logo {
@@ -9,7 +11,7 @@
 
 .Header {
   background-color: #282c34;
-
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,6 +32,8 @@
 }
 .search {
   width: 100%;
+  display: flex;
+  flex-flow: row wrap;
 }
 .cities {
   display: flex;
@@ -40,7 +44,25 @@
 
 .accordion {
   overflow-y: scroll;
-  max-height: 40vh;
+  width: 65%;
+  margin-top: 20px;
+  max-height: 70vh;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  background-size: contain;
+}
+.accordion-layer {
+  width: 50%;
+  height: 70vh;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  background: url('./poll.jpg') no-repeat center center;
+  background-size: contain;
 }
 .accordion > .card .card-header,
 .card-body {
@@ -75,6 +97,7 @@ button:hover {
 form {
   font-weight: 100;
   margin-top: 20px;
+  width: 50%;
 }
 form input {
   border: 1px solid brown;
@@ -94,23 +117,28 @@ span {
 h6:hover {
   color: brown;
 }
-.accordion {
-  width: 60%;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
-}
+
 form input label {
   text-align: left;
 }
 form p {
-  font-style: 0.5rem;
-}
-option {
-  background-color: brown;
+  font-size: 0.8rem;
 }
 
+option,
+select {
+  background-color: transparent;
+  color: brown;
+  border-color: brown;
+  border-radius: 5px;
+  padding: 10px;
+}
+option {
+  background-color: #282c34;
+}
+option::hover {
+  color: orangered;
+}
 .footer {
   bottom: 0px;
   position: absolute;
@@ -123,6 +151,6 @@ option {
 .card-header h5 {
   font-size: 0.8rem;
 }
-.card-header h5::hover {
+.card-header h5:hover {
   color: brown;
 }
