@@ -8,7 +8,7 @@ const Header = props => {
       </h2>
       <h6>
         {' '}
-        Measurements include datas from listed countries of:
+        Measurements include data from listed countries of:
         <br />
         Poland <span>|</span>Germany<span>|</span> France <span>|</span>Spain
       </h6>
